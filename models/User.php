@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\web\IdentityInterface;
 
 /**
@@ -60,6 +62,18 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Обновлен',
+        ];
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    'value' => new Expression('NOW()'),
+                ],
+            ],
         ];
     }
 
