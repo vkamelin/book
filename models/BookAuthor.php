@@ -3,9 +3,11 @@
 namespace app\models;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use app\models\Book;
 
 /**
  * This is the model class for table "book_author".
@@ -16,6 +18,7 @@ use yii\db\Expression;
  * @property string $middle_name
  * @property int $created_at
  * @property int $updated_at
+ * @property Book[] $books
  */
 class BookAuthor extends ActiveRecord
 {
@@ -62,5 +65,14 @@ class BookAuthor extends ActiveRecord
                 ],
             ],
         ];
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    public function getBooks(): \yii\db\ActiveQuery
+    {
+        return $this->hasMany(Book::class, ['id' => 'book_id'])
+            ->viaTable('book_author_book', ['book_author_id' => 'id']);
     }
 }
