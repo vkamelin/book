@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -16,9 +17,10 @@ use yii\db\ActiveRecord;
  * @property string|null $access_token
  * @property int $status
  * @property int $created_at
+ * @property-read string $authKey
  * @property int $updated_at
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}
